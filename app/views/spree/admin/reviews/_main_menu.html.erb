@@ -1,0 +1,5 @@
+<% if can? :admin, Spree::Promotion %>
+    <ul class="nav nav-sidebar">
+      <%= tab 'reviews', icon: 'eye-open' %>
+    </ul>
+<% end %>

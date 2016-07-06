@@ -1,0 +1,17 @@
+<h2><%= Spree.t('reviews.title') %></h2>
+
+<% Spree::Review.with_review.approved.order('created_at DESC').each do |item| %>
+    <h3><%= item.title %>(<%= Spree.t('activerecord.attributes.spree/review.rating') %>: <%= item.rating %>)</h3>
+    <%= simple_format(item.description) %>
+<% end %>
+
+<% if can? :create, Spree::Review %>
+    <div id="review_form" class="panel panel-default">
+      <div class="panel-heading">
+        <h3><%= Spree.t('frontend.reviews.make_new_review') %></h3>
+      </div>
+      <div class="panel-body" id="review_form_wrapper">
+        <%= render :partial => 'spree/reviews/form', locals: {review: Spree::Review.new(product: @product)} %>
+      </div>
+    </div>
+<% end %>
