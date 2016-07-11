@@ -1,6 +1,6 @@
 <h2><%= Spree.t('reviews.title') %></h2>
 
-<% Spree::Review.with_review.approved.order('created_at DESC').each do |item| %>
+<% Spree::Review.approved.order(created_at: :desc).each do |item| %>
     <h3><%= item.title %>(<%= Spree.t('activerecord.attributes.spree/review.rating') %>: <%= item.rating %>)</h3>
     <%= simple_format(item.description) %>
 <% end %>

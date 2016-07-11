@@ -1,2 +1,8 @@
-// Placeholder manifest file.
-// the installer will append this file to the app vendored assets here: vendor/assets/javascripts/spree/frontend/all.js'
+$(document).ready(function(){
+  $('#fast_rating_form').on('ajax:success', function(xhr, data, status){
+    if(data.status == 'ok'){
+      $('#fast_rating_form').replaceWith(data.message);
+    }
+  });
+});
+

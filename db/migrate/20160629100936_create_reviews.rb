@@ -5,11 +5,7 @@ class CreateReviews < ActiveRecord::Migration
       t.integer     :rating
       t.string      :title
       t.text        :description
-
       t.boolean     :approved, default: false
-      t.boolean     :with_review, default: false
-
-
       t.timestamps null: false
     end
     add_index :spree_reviews, [:product_id],         :name => 'index_spree_reviews_on_product_id'

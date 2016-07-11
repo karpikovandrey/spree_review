@@ -1,10 +1,10 @@
 module Spree
   module Admin
     class ReviewsController < Spree::Admin::BaseController
-      before_filter :load_review, only: [:edit, :update]
+      before_action :load_review, only: [:edit, :update]
 
       def index
-        @reviews = Review.with_review.order('created_at DESC').page(params[:page]).
+        @reviews = Review.order(created_at: :desc).page(params[:page]).
           per(params[:per_page] || Spree::Config[:orders_per_page])
 
         authorize! :manage, @reviews
@@ -17,7 +17,6 @@ module Spree
       def update
         authorize! :update, @review
         if @review.update(review_params)
-          @review.calculate_rating if @review.previous_changes[:approved]
           redirect_to action: :index
         else
           render action: :edit
@@ -27,7 +26,11 @@ module Spree
       private
 
       def load_review
-        @review = Spree::Review.find(params[:id])
+        @review = Spree::Review.find_by_id(params[:id])
+        unless @review
+          flash.notice = "Item not exist"
+          redirect_to admin_reviews_url and return
+        end
       end
 
       def review_params
